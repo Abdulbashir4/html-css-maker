@@ -1,0 +1,275 @@
+/* =================================================
+   BASE / RESET
+================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* =================================================
+   BLOCK WRAPPER
+================================================= */
+
+.block-wrapper {
+  position: relative;
+}
+
+/* =================================================
+   SELECTED BLOCK
+================================================= */
+
+.selected-block {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+/* =================================================
+   DRAG & DROP
+================================================= */
+
+.drop-hover {
+  outline: 2px dashed #3b82f6;
+  outline-offset: -4px;
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* =================================================
+   REMOVE BUTTON (UNIVERSAL)
+================================================= */
+
+.remove-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 20px;
+  height: 20px;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 9999px;
+  font-size: 12px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 50;
+}
+
+[data-canvas-block]:hover > .remove-btn {
+  display: flex;
+}
+
+/* =================================================
+   SIDEBAR (BLOCK PANEL)
+================================================= */
+
+#blockPanel {
+  padding: 12px;
+}
+
+.block-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  margin-bottom: 8px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+
+  cursor: grab;
+  user-select: none;
+  transition: all 0.18s ease;
+}
+
+.block-item:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.12);
+  transform: translateY(-1px);
+}
+
+.block-item:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+/* icon badge */
+.block-item::before {
+  content: "⬛";
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+
+  font-size: 16px;
+}
+
+/* icons by block type */
+.block-item[data-block="section"]::before { content: "🧱"; }
+.block-item[data-block="inner-section"]::before { content: "🧩"; }
+.block-item[data-block="column"]::before { content: "📐"; }
+.block-item[data-block="heading"]::before { content: "🔠"; }
+.block-item[data-block="text"]::before { content: "📝"; }
+.block-item[data-block="image"]::before { content: "🖼️"; }
+.block-item[data-block="button"]::before { content: "🔘"; }
+
+/* =================================================
+   ELEMENTOR-LIKE SECTION
+================================================= */
+
+section[data-canvas-block="section"] {
+  border: 2px dashed #cfd8dc;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #eef6f3;
+}
+
+/* =================================================
+   COLUMN
+================================================= */
+
+[data-canvas-block="column"] {
+  min-height: 120px;
+  border: 2px dashed #cfd8dc;
+  background: #ffffff;
+  padding: 12px;
+}
+
+/* =================================================
+   EMPTY STATE (Drag widget here)
+================================================= */
+
+.el-empty {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.el-plus {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  background: #9b0033;
+  color: #fff;
+  font-size: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 6px;
+}
+
+/* =================================================
+   SECTION TOOLBAR (Elementor Style)
+================================================= */
+
+.el-section-toolbar {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #38bdf8;
+  padding: 4px 8px;
+  border-radius: 6px;
+
+  display: none;
+  gap: 6px;
+  z-index: 60;
+}
+
+.block-wrapper:hover .el-section-toolbar {
+  display: flex;
+}
+
+.el-btn {
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* =================================================
+   CONTENT BLOCKS
+================================================= */
+
+[data-canvas-block="heading"] {
+  margin-bottom: 8px;
+}
+
+[data-canvas-block="text"] {
+  margin-bottom: 8px;
+}
+
+[data-canvas-block="button"] {
+  margin-top: 6px;
+}
+
+/* =================================================
+   SCROLLBAR (SIDEBAR)
+================================================= */
+
+aside::-webkit-scrollbar,
+#blockPanel::-webkit-scrollbar {
+  width: 8px;
+}
+
+aside::-webkit-scrollbar-thumb,
+#blockPanel::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+aside::-webkit-scrollbar-thumb:hover,
+#blockPanel::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+
+/* tree view er jonoo */
+.tree-panel{
+  border-top:1px solid #ddd;
+  padding:8px;
+  font-size:13px;
+}
+
+.tree-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.tree-item{
+  padding:3px 6px;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+.tree-item:hover{
+  background:#eee;
+}
+
+.tree-item.active{
+  background:#3b82f6;
+  color:#fff;
+}
+
+.tree-children{
+  padding-left:14px;
+}

@@ -1,0 +1,275 @@
+<div class="p-4 space-y-4 text-sm">
+
+  <!-- BACKGROUND (HYBRID) -->
+<div class="space-y-1">
+  <label class="font-medium">Background</label>
+
+  <div class="flex border rounded">
+    <!-- Input -->
+    <input
+      id="bgInput"
+      type="text"
+      placeholder="bg-red-500, bg-[#ff0000]"
+      class="flex-1 px-2 py-1 text-sm outline-none"
+    />
+
+    <!-- Select -->
+    <select
+      id="bgSelect"
+      class="border-l px-2"
+    >
+      <option value="">Preset</option>
+      <option value="bg-white">White</option>
+      <option value="bg-gray-100">Gray</option>
+      <option value="bg-blue-100">Blue</option>
+      <option value="bg-yellow-100">Yellow</option>
+    </select>
+  </div>
+</div>
+
+  
+  <!-- PADDING (HYBRID) -->
+  <div class="space-y-1">
+    <label>Padding</label>
+    <div class="flex border rounded">
+      <input id="padInput" placeholder="p-4, px-6"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="padSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="p-2">Small</option>
+        <option value="p-4">Medium</option>
+        <option value="p-6">Large</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- MARGIN (HYBRID) -->
+  <div class="space-y-1">
+    <label>Margin</label>
+    <div class="flex border rounded">
+      <input id="marginInput" placeholder="m-4, mt-6"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="marginSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="m-0">None</option>
+        <option value="m-2">Small</option>
+        <option value="m-4">Medium</option>
+        <option value="m-6">Large</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- TEXT ALIGN (HYBRID) -->
+  <div class="space-y-1">
+    <label>Text Align</label>
+    <div class="flex border rounded">
+      <input id="alignInput" placeholder="text-left"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="alignSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="text-left">Left</option>
+        <option value="text-center">Center</option>
+        <option value="text-right">Right</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- RADIUS (HYBRID) -->
+  <div class="space-y-1">
+    <label>Radius</label>
+    <div class="flex border rounded">
+      <input id="radiusInput" placeholder="rounded-xl"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="radiusSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="rounded">Normal</option>
+        <option value="rounded-lg">Large</option>
+        <option value="rounded-full">Full</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- FONT SIZE (HYBRID) -->
+  <div class="space-y-1">
+    <label>Font Size</label>
+    <div class="flex border rounded">
+      <input id="fontInput" placeholder="text-xl"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="fontSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="text-sm">Small</option>
+        <option value="text-base">Normal</option>
+        <option value="text-lg">Large</option>
+        <option value="text-xl">XL</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- WIDTH -->
+  <div class="space-y-1">
+    <label>Width</label>
+    <div class="flex border rounded">
+      <input id="widthInput" placeholder="w-1/2"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="widthSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="w-full">Full</option>
+        <option value="w-1/2">1/2</option>
+        <option value="w-1/3">1/3</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- HEIGHT -->
+  <div class="space-y-1">
+    <label>Height</label>
+    <div class="flex border rounded">
+      <input id="heightInput" placeholder="h-40"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="heightSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="h-full">Full</option>
+        <option value="h-screen">Screen</option>
+        <option value="h-40">h-40</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- TEXT COLOR (HYBRID) -->
+  <div class="space-y-1">
+    <label>Text Color</label>
+    <div class="flex border rounded">
+      <input id="textColorInput" placeholder="text-red-500"
+        class="flex-1 px-2 py-1 outline-none text-sm">
+      <select id="textColorSelect" class="border-l px-2">
+        <option value="">Preset</option>
+        <option value="text-black">Black</option>
+        <option value="text-red-500">Red</option>
+        <option value="text-blue-500">Blue</option>
+        <option value="text-green-500">Green</option>
+      </select>
+    </div>
+  </div>
+  
+  </div>
+  
+
+  <!-- ===================== -->
+<!-- DISPLAY -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Display</label>
+  <div class="flex border rounded">
+    <input id="displayInput"
+      placeholder="block, flex, grid..."
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="displaySelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="block">Block</option>
+      <option value="inline-block">Inline Block</option>
+      <option value="inline">Inline</option>
+      <option value="flex">Flex</option>
+      <option value="inline-flex">Inline Flex</option>
+      <option value="grid">Grid</option>
+      <option value="inline-grid">Inline Grid</option>
+      <option value="hidden">Hidden</option>
+    </select>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- FLEX DIRECTION -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Flex Direction</label>
+  <div class="flex border rounded">
+    <input id="flexDirInput"
+      placeholder="flex-row"
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="flexDirSelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="flex-row">Row</option>
+      <option value="flex-col">Column</option>
+      <option value="flex-row-reverse">Row Reverse</option>
+      <option value="flex-col-reverse">Column Reverse</option>
+    </select>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- JUSTIFY CONTENT -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Justify</label>
+  <div class="flex border rounded">
+    <input id="justifyInput"
+      placeholder="justify-center"
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="justifySelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="justify-start">Start</option>
+      <option value="justify-center">Center</option>
+      <option value="justify-end">End</option>
+      <option value="justify-between">Between</option>
+      <option value="justify-around">Around</option>
+      <option value="justify-evenly">Evenly</option>
+    </select>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- ALIGN ITEMS -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Align Items</label>
+  <div class="flex border rounded">
+    <input id="itemsInput"
+      placeholder="items-center"
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="itemsSelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="items-start">Start</option>
+      <option value="items-center">Center</option>
+      <option value="items-end">End</option>
+      <option value="items-stretch">Stretch</option>
+    </select>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- FLEX WRAP -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Flex Wrap</label>
+  <div class="flex border rounded">
+    <input id="wrapInput"
+      placeholder="flex-wrap"
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="wrapSelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="flex-wrap">Wrap</option>
+      <option value="flex-nowrap">No Wrap</option>
+      <option value="flex-wrap-reverse">Wrap Reverse</option>
+    </select>
+  </div>
+</div>
+
+<!-- ===================== -->
+<!-- GAP -->
+<!-- ===================== -->
+<div class="space-y-1">
+  <label>Gap</label>
+  <div class="flex border rounded">
+    <input id="gapInput"
+      placeholder="gap-4"
+      class="flex-1 px-2 py-1 text-sm outline-none">
+    <select id="gapSelect" class="border-l px-2">
+      <option value="">Preset</option>
+      <option value="gap-0">0</option>
+      <option value="gap-2">2</option>
+      <option value="gap-4">4</option>
+      <option value="gap-6">6</option>
+      <option value="gap-8">8</option>
+    </select>
+  </div>
+</div>
