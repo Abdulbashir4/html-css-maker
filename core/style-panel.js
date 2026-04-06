@@ -1,26 +1,17 @@
 import { state } from "./state.js";
 
-/* =========================
-   BIND STYLE PANEL
-========================= */
+/* ============================
+   STYLE PANEL (WORKING CORE)
+============================ */
+
 export function bindStylePanel(){
 
   const keys = [
-    "bg",
-    "pad",
-    "margin",
-    "align",
-    "radius",
-    "font",
-    "width",
-    "height",
-    "textColor",
-    "display",
-  "flexDir",
-  "justify",
-  "items",
-  "wrap",
-  "gap"
+    "bg","pad","margin","align",
+    "radius","font","width",
+    "height","textColor",
+    "display","flexDir",
+    "justify","items","wrap","gap"
   ];
 
   const controls = {};
@@ -32,7 +23,7 @@ export function bindStylePanel(){
     };
   });
 
-  /* ===== HYBRID BIND ===== */
+  /* ---------- hybrid bind ---------- */
   keys.forEach(k=>{
     const c = controls[k];
 
@@ -45,35 +36,31 @@ export function bindStylePanel(){
 
     if(c.select){
       c.select.addEventListener("change",()=>{
-        if(c.input) c.input.value = c.select.value;
+        if(c.input) c.input.value=c.select.value;
         applyStyles();
       });
     }
   });
 
-  /* ===== LOAD VALUES ON SELECT ===== */
+  /* ---------- load on select ---------- */
   document.addEventListener("click",()=>{
-
     if(!state.selected) return;
 
-    const map = getStyleMap(state.selected);
+    const map = getMap(state.selected);
 
     keys.forEach(k=>{
-      if(controls[k].input){
+      if(controls[k].input)
         controls[k].input.value = map[k] || "";
-      }
-      if(controls[k].select){
+      if(controls[k].select)
         controls[k].select.value = "";
-      }
     });
-
   });
-
 }
 
-/* =========================
+/* ============================
    APPLY STYLES
-========================= */
+============================ */
+
 function applyStyles(){
 
   if(!state.selected) return;
@@ -81,157 +68,55 @@ function applyStyles(){
   const keys = [
     "bg","pad","margin","align",
     "radius","font","width",
-    "height","textColor", "display",
-  "flexDir",
-  "justify",
-  "items",
-  "wrap",
-  "gap"
+    "height","textColor",
+    "display","flexDir",
+    "justify","items","wrap","gap"
   ];
 
   const map = {};
 
   keys.forEach(k=>{
-    const input = document.getElementById(k+"Input");
-    map[k] = input ? input.value : "";
+    const el = document.getElementById(k+"Input");
+    map[k] = el ? el.value.trim() : "";
   });
 
   state.selected.dataset.twMap = JSON.stringify(map);
-
   state.selected.dataset.tw =
     Object.values(map).filter(Boolean).join(" ");
 
   applyTailwind(state.selected);
 }
 
+/* ============================
+   APPLY TAILWIND (CORE)
+============================ */
+
 function applyTailwind(el){
 
-              /* =========================
-                KEEP ONLY SYSTEM CLASSES
-              ========================= */
+  const keep = [];
 
-              const system = [];
+  if(el.classList.contains("block-wrapper")) keep.push("block-wrapper");
+  if(el.classList.contains("el-section")) keep.push("el-section");
+  if(el.classList.contains("el-column")) keep.push("el-column");
+  if(el.classList.contains("el-column-inner")) keep.push("el-column-inner");
+  if(el.classList.contains("is-selected")) keep.push("is-selected");
 
-              if(el.classList.contains("block-wrapper"))
-                system.push("block-wrapper");
+  el.className = keep.join(" ");
 
-              if(el.classList.contains("el-section"))
-                system.push("el-section");
-
-              if(el.classList.contains("el-column"))
-                system.push("el-column");
-
-              if(el.classList.contains("el-column-inner"))
-                system.push("el-column-inner");
-
-              if(el.classList.contains("is-selected"))
-                system.push("is-selected");
-
-              // 🔥 wipe everything else
-              el.className = system.join(" ");
-
-            /* =========================
-              REMOVE OLD PADDING CLASSES
-            ========================= */
-            [
-              "p-","px-","py-",
-              "pt-","pr-","pb-","pl-"
-            ].forEach(prefix=>{
-
-              [...el.classList].forEach(cls=>{
-                if(cls.startsWith(prefix)){
-                  el.classList.remove(cls);
-                }
-              });
-
-            });
-
-
-
-
-            /* =========================
-              APPLY NEW USER CLASSES
-            ========================= */
-
-            if(el.dataset.tw){
-
-              el.dataset.tw
-                .split(/\s+/)
-                .forEach(cls=>{
-                  if(cls.trim()){
-                    el.classList.add(cls);
-                  }
-                });
-
-            }
-
-
-
-                          /* =========================
-              FIX BACKGROUND OVERLAY
-            ========================= */
-            if(
-              el.classList.contains("el-section") ||
-              el.classList.contains("el-column")
-            ){
-              const inner = el.querySelector(".el-column-inner");
-
-              if(inner && el.dataset.tw){
-
-                const hasBg =
-                  el.dataset.tw.split(/\s+/)
-                    .some(c => c.startsWith("bg-"));
-
-                if(hasBg){
-                  inner.classList.remove("bg-white");
-                  inner.classList.remove("bg-gray-100");
-                }
-
-              }
-            }
-
-
-
-          /* =========================
-            REMOVE INNER BG IF PARENT HAS BG
-          ========================= */
-          if(
-            el.classList.contains("el-section") ||
-            el.classList.contains("el-column")
-          ){
-
-            const inner = el.querySelector(".el-column-inner");
-
-            if(inner && el.dataset.tw){
-
-              const hasBg =
-                el.dataset.tw.split(/\s+/)
-                  .some(c => c.startsWith("bg-"));
-
-              if(hasBg){
-
-                [...inner.classList].forEach(cls=>{
-                  if(cls.startsWith("bg-")){
-                    inner.classList.remove(cls);
-                  }
-                });
-
-              }
-
-            }
-
-          }
-
-
+  if(el.dataset.tw){
+    el.dataset.tw.split(/\s+/).forEach(cls=>{
+      if(cls) el.classList.add(cls);
+    });
+  }
 }
 
+/* ============================
+   READ MAP
+============================ */
 
-/* =========================
-   READ STORED MAP
-========================= */
-function getStyleMap(el){
+function getMap(el){
   try{
-    return JSON.parse(el.dataset.twMap || "{}");
+    return JSON.parse(el.dataset.twMap||"{}");
   }catch{
     return {};
   }

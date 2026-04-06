@@ -273,3 +273,24 @@ aside::-webkit-scrollbar-thumb:hover,
 .tree-children{
   padding-left:14px;
 }
+
+
+
+
+
+
+
+
+
+.el-section,
+.el-column,
+.el-column-inner{
+  padding:0 !important;
+  margin:0 !important;
+  background:transparent !important;
+  min-height:0 !important;
+}
+
+.is-selected{
+  outline:2px dashed #3b82f6;
+}

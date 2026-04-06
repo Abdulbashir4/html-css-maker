@@ -1,0 +1,21 @@
+<div class="el-section block-wrapper border border-dashed relative p-4 min-h-[120px]" data-canvas-block="section" data-is-container="true">
+    <div class="el-section-toolbar">
+      <button data-action="add-col">＋ Column</button>
+      <button data-action="remove">✕</button>
+    </div>
+
+    <div class="el-section-inner"><div class="block-wrapper el-column bg-blue-400" data-canvas-block="column" data-is-container="true" style="flex: 0 0 100%; max-width: 100%;" data-tw-map="{&quot;bg&quot;:&quot;bg-blue-400&quot;,&quot;pad&quot;:&quot;&quot;,&quot;margin&quot;:&quot;&quot;,&quot;align&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;,&quot;font&quot;:&quot;&quot;,&quot;width&quot;:&quot;&quot;,&quot;height&quot;:&quot;&quot;,&quot;textColor&quot;:&quot;&quot;,&quot;display&quot;:&quot;&quot;,&quot;flexDir&quot;:&quot;&quot;,&quot;justify&quot;:&quot;&quot;,&quot;items&quot;:&quot;&quot;,&quot;wrap&quot;:&quot;&quot;,&quot;gap&quot;:&quot;&quot;}" data-tw="bg-blue-400">
+    <div class="el-column-toolbar">
+      <button class="col-remove">✕</button>
+    </div>
+    <div class="el-column-inner"><p contenteditable="true" data-canvas-block="text" draggable="true" style="position: relative;" class="is-selected bg-yellow-100 text-center" data-tw-map="{&quot;bg&quot;:&quot;bg-yellow-100&quot;,&quot;pad&quot;:&quot;&quot;,&quot;margin&quot;:&quot;&quot;,&quot;align&quot;:&quot;text-center&quot;,&quot;radius&quot;:&quot;&quot;,&quot;font&quot;:&quot;&quot;,&quot;width&quot;:&quot;&quot;,&quot;height&quot;:&quot;&quot;,&quot;textColor&quot;:&quot;&quot;,&quot;display&quot;:&quot;&quot;,&quot;flexDir&quot;:&quot;&quot;,&quot;justify&quot;:&quot;&quot;,&quot;items&quot;:&quot;&quot;,&quot;wrap&quot;:&quot;&quot;,&quot;gap&quot;:&quot;&quot;}" data-tw="bg-yellow-100 text-center">Edit text<button type="button" class="
+    el-remove-btn
+    absolute -top-2 -right-2
+    w-5 h-5
+    bg-black text-white text-xs
+    rounded-full
+    flex items-center justify-center
+    cursor-pointer
+  ">✕</button></p></div>
+  </div></div>
+  </div>

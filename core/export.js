@@ -1,93 +1,14 @@
 /* =====================================
-   PURE HTML EXPORT (STABLE)
+   PURE HTML EXPORT
 ===================================== */
 
 export function exportPureHTML(){
 
   const canvas = document.getElementById("canvas");
-  const clone  = canvas.cloneNode(true);
+  const clone = canvas.cloneNode(true);
 
-  /* 1. REMOVE TOOLBARS */
-  clone.querySelectorAll(
-    ".el-section-toolbar,.el-column-toolbar,.el-remove-btn"
-  ).forEach(el=>el.remove());
+  cleanBuilder(clone);
 
-  /* 2. APPLY TAILWIND */
-  clone.querySelectorAll("[data-tw]").forEach(el=>{
-    el.className = el.dataset.tw || "";
-  });
-
-  /* 3. REMOVE ATTRIBUTES */
-  clone.querySelectorAll("*").forEach(el=>{
-    [...el.attributes].forEach(a=>{
-      if(
-        a.name.startsWith("data-") ||
-        a.name==="contenteditable" ||
-        a.name==="draggable" ||
-        a.name==="style"
-      ){
-        el.removeAttribute(a.name);
-      }
-    });
-  });
-
-  /* 4. REMOVE BUILDER CLASSES */
-  clone.querySelectorAll("*").forEach(el=>{
-    el.classList.remove(
-      "el-section",
-      "el-section-inner",
-      "el-column",
-      "el-column-inner",
-      "block-wrapper",
-      "is-selected",
-      "border",
-      "border-dashed",
-      "relative",
-      "min-h-[120px]"
-    );
-  });
-
-  /* 5. MERGE WRAPPERS */
-  flatten(clone);
-
-  /* 6. CLEAN HEIGHT (KEEP LAST h-*) */
-  clone.querySelectorAll("*").forEach(el=>{
-
-    const heights =
-      [...el.classList].filter(c=>c.startsWith("h-"));
-
-    if(heights.length > 1){
-      const last = heights[heights.length-1];
-      heights.forEach(h=>{
-        if(h !== last) el.classList.remove(h);
-      });
-    }
-
-  });
-
-  /* 7. CLEAN PADDING (KEEP LAST p-*) */
-  clone.querySelectorAll("*").forEach(el=>{
-
-    const pads =
-      [...el.classList].filter(c =>
-        /^p[trblxy]?-\[?.+/.test(c)
-      );
-
-    if(pads.length > 1){
-
-      const last = pads[pads.length-1];
-
-      pads.forEach(p=>{
-        if(p !== last){
-          el.classList.remove(p);
-        }
-      });
-
-    }
-
-  });
-
-  /* 8. OUTPUT */
   const html = formatHTML(clone.innerHTML.trim());
 
   document.getElementById("codeOutput").value = html;
@@ -96,20 +17,66 @@ export function exportPureHTML(){
 }
 
 
+
 /* =====================================
-   VIEW PAGE HTML
+   FOR LIVE PAGE
 ===================================== */
 
 export function getPureHTMLForView(){
 
-  const canvas = document.getElementById("canvas");
-  const clone  = canvas.cloneNode(true);
+  const canvas=document.getElementById("canvas");
+  const clone=canvas.cloneNode(true);
 
+  // apply tw
   clone.querySelectorAll("[data-tw]").forEach(el=>{
     el.className = el.dataset.tw || "";
   });
 
+  // remove attributes
   clone.querySelectorAll("*").forEach(el=>{
+    [...el.attributes].forEach(a=>{
+      if(
+        a.name.startsWith("data-") ||
+        a.name==="contenteditable" ||
+        a.name==="draggable"
+      ){
+        el.removeAttribute(a.name);
+      }
+    });
+  });
+
+  // remove builder classes
+  clone.querySelectorAll("*").forEach(el=>{
+    el.classList.remove(
+      "el-section","el-column",
+      "el-column-inner","block-wrapper",
+      "is-selected"
+    );
+  });
+
+  return clone.innerHTML.trim();
+}
+
+
+
+/* =====================================
+   MASTER CLEANER
+===================================== */
+
+function cleanBuilder(root){
+
+  /* 1) REMOVE TOOLBARS & REMOVE BTNS */
+  root.querySelectorAll(
+    ".el-section-toolbar,.el-column-toolbar,.el-remove-btn"
+  ).forEach(el=>el.remove());
+
+  /* 2) APPLY data-tw → class */
+  root.querySelectorAll("[data-tw]").forEach(el=>{
+    el.className = el.dataset.tw || "";
+  });
+
+  /* 3) REMOVE ATTRIBUTES */
+  root.querySelectorAll("*").forEach(el=>{
     [...el.attributes].forEach(a=>{
       if(
         a.name.startsWith("data-") ||
@@ -122,52 +89,92 @@ export function getPureHTMLForView(){
     });
   });
 
-  clone.querySelectorAll("*").forEach(el=>{
+  /* 4) REMOVE BUILDER CLASSES */
+  root.querySelectorAll("*").forEach(el=>{
     el.classList.remove(
-      "el-section",
-      "el-column",
-      "block-wrapper",
-      "is-selected",
-      "border",
-      "border-dashed",
-      "relative",
-      "min-h-[120px]"
-    );
+  "el-section",
+  "el-column",
+  "el-section-inner",
+  "el-column-inner",
+  "block-wrapper",
+  "is-selected",
+  "border",
+  "border-dashed",
+  "relative",
+  "min-h-[120px]",
+  "p-4",
+  "bg-white",
+  "shadow"
+);
+
   });
 
-  flatten(clone);
+  /* 5) UNWRAP INNER WRAPPERS */
+  root.querySelectorAll(
+    ".el-section-inner,.el-column-inner"
+  ).forEach(el=>{
+    el.replaceWith(...el.childNodes);
+  });
 
-  return clone.innerHTML.trim();
+  /* 6) MERGE SINGLE CHILD DIVS */
+  mergeDivs(root);
+
+  /* 7) CLEAN DUPLICATES */
+  cleanupClasses(root);
 }
+
 
 
 /* =====================================
-   HELPERS
+   MERGE SINGLE CHILD DIV
 ===================================== */
 
-function flatten(root){
+function mergeDivs(root){
 
-  let again=true;
+  let again = true;
 
   while(again){
-    again=false;
+    again = false;
 
-    root.querySelectorAll("div").forEach(p=>{
+    root.querySelectorAll("div").forEach(parent=>{
 
-      if(p.children.length!==1) return;
+      if(parent.children.length !== 1) return;
 
-      const c=p.children[0];
-      if(c.tagName!=="DIV") return;
+      const child = parent.children[0];
+      if(child.tagName !== "DIV") return;
 
-      p.className =
-        (p.className+" "+c.className).trim();
+      parent.className =
+        (parent.className + " " + child.className).trim();
 
-      p.innerHTML=c.innerHTML;
-      again=true;
+      parent.innerHTML = child.innerHTML;
 
+      again = true;
     });
   }
 }
+
+
+
+/* =====================================
+   REMOVE DUPLICATE TAILWIND
+===================================== */
+
+function cleanupClasses(root){
+
+  root.querySelectorAll("*").forEach(el=>{
+
+    const seen = new Set();
+    [...el.classList].forEach(cls=>{
+      if(seen.has(cls)){
+        el.classList.remove(cls);
+      }else{
+        seen.add(cls);
+      }
+    });
+
+  });
+}
+
 
 
 /* =====================================
@@ -176,18 +183,18 @@ function flatten(root){
 
 export function formatHTML(html){
 
-  let out = "";
-  let indent = 0;
+  let out="";
+  let indent=0;
 
-  html.replace(/></g, ">\n<")
+  html.replace(/></g,">\n<")
     .split("\n")
-    .forEach(line => {
+    .forEach(line=>{
 
       if(line.match(/^<\/\w/)){
-        indent = Math.max(indent-1,0);
+        indent=Math.max(indent-1,0);
       }
 
-      out += "  ".repeat(indent) + line + "\n";
+      out += "  ".repeat(indent)+line+"\n";
 
       if(
         line.match(/^<\w[^>]*[^\/]>$/) &&
@@ -200,4 +207,3 @@ export function formatHTML(html){
 
   return out.trim();
 }
-
