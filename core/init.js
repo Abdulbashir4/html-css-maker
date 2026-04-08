@@ -2,9 +2,8 @@ import { state } from './state.js';
 import { bindSidebar } from './sidebar.js';
 import { bindSelection } from './selection.js';
 import { setPreviewMode } from './preview.js';
-import { exportPureHTML, formatHTML, getPureHTMLForView } from './export.js';
+import { exportPureHTML, formatHTML, getPureHTMLForView, generateCleanHTML } from './export.js';
 import { bindStylePanel } from './style-panel.js';
-
 
 
 /* =========================
@@ -118,15 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function publishPage(){
 
   const pageName = pageNameInput.value.trim();
+
   if(!pageName){
     alert("Enter page name");
     return;
   }
 
-  const cleanHTML = formatHTML(
-    getPureHTMLForView()
-  );
+  // ✅ CLEAN HTML (FIXED)
+  const cleanHTML = generateCleanHTML();
 
+  // ✅ BUILDER JSON (edit করার জন্য)
   const builderHTML = state.canvas.innerHTML;
 
   fetch("save_page.php",{
@@ -145,7 +145,6 @@ function publishPage(){
   });
 
 }
-
 
 
 /* =========================

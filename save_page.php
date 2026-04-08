@@ -2,7 +2,7 @@
 
 $page = $_POST['page'] ?? 'home';
 $html = $_POST['html'] ?? '';
-$json = $_POST['json'] ?? '';   // 🔹 builder editable html
+$json = $_POST['json'] ?? '';
 
 $page = preg_replace("/[^a-zA-Z0-9_-]/","",$page);
 
@@ -18,7 +18,6 @@ if(!is_dir($folder)){
 
 $jsonFile = $folder . "/" . $page . ".json";
 file_put_contents($jsonFile, $json);
-
 
 
 /* =========================
@@ -46,17 +45,22 @@ $template_end = <<<HTML
 HTML;
 
 if(file_exists($file)){
+
+  // ✅ existing content load
   $existing = file_get_contents($file);
 
+  // ✅ new content append before </body>
   $updated = str_replace(
     "</body>",
     $html . "\n</body>",
     $existing
   );
 
-  file_put_contents($file,$updated);
-}
-else{
+  file_put_contents($file, $updated);
+
+}else{
+
+  // ✅ first time create
   file_put_contents(
     $file,
     $template_start . $html . $template_end

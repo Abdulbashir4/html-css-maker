@@ -5,41 +5,71 @@ import { addRemoveButton } from './ui-helpers.js';
    CREATE BLOCK (ENTRY)
 ========================= */
 export function createBlock(type) {
-  let el = null;
+           let el = null;
+           if (type === 'div') {
+            el = document.createElement('div');
+            el.className = 'el-section block-wrapper border border-dashed relative p-4 min-h-[120px]';
+            el.dataset.canvasBlock = 'div';
+            el.dataset.isContainer = 'true';
+            el.innerHTML = `<div class="el-section-toolbar">
+                <button data-action="add-col">＋ Column</button>
+                <button data-action="remove">✕</button>
+              </div>
+              <div class="el-section-inner"></div>`;
+              const inner = el.querySelector(".el-section-inner");
 
-  /* ===== SECTION ===== */
- if (type === 'section') {
+            // default column
+            inner.appendChild(createColumn(true));
 
-  el = document.createElement('div');
-  el.className =
-    'el-section block-wrapper border border-dashed relative p-4 min-h-[120px]';
-  el.dataset.canvasBlock = 'section';
-  el.dataset.isContainer = 'true';
+            enableDropTarget(inner);
 
-  el.innerHTML = `
-    <div class="el-section-toolbar">
-      <button data-action="add-col">＋ Column</button>
-      <button data-action="remove">✕</button>
-    </div>
+            el.querySelector('[data-action="remove"]').onclick =
+              () => el.remove();
 
-    <div class="el-section-inner"></div>
-  `;
+            el.querySelector('[data-action="add-col"]').onclick =
+              () => inner.appendChild(createColumn());
 
-  const inner = el.querySelector(".el-section-inner");
+            return el;
 
-  // default column
-  inner.appendChild(createColumn(true));
+           }
 
-  enableDropTarget(inner);
+            /* ===== SECTION ===== */
+          else if (type === 'section') {
 
-  el.querySelector('[data-action="remove"]').onclick =
-    () => el.remove();
+            el = document.createElement('div');
+            el.className =
+              'el-section block-wrapper border border-dashed relative p-4 min-h-[120px]';
+            el.dataset.canvasBlock = 'section';
+            el.dataset.isContainer = 'true';
 
-  el.querySelector('[data-action="add-col"]').onclick =
-    () => inner.appendChild(createColumn());
+            el.innerHTML = `
+              <div class="el-section-toolbar">
+                <button data-action="add-col">＋ Column</button>
+                <button data-action="remove">✕</button>
+              </div>
 
-  return el;
-}
+              <div class="el-section-inner"></div>
+            `;
+
+            const inner = el.querySelector(".el-section-inner");
+
+            // default column
+            inner.appendChild(createColumn(true));
+
+            enableDropTarget(inner);
+
+            el.querySelector('[data-action="remove"]').onclick =
+              () => el.remove();
+
+            el.querySelector('[data-action="add-col"]').onclick =
+              () => inner.appendChild(createColumn());
+
+            return el;
+          }
+
+
+          /*=====For Div block========= */
+
 
 
 

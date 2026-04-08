@@ -207,3 +207,12 @@ export function formatHTML(html){
 
   return out.trim();
 }
+
+
+export function generateCleanHTML() {
+  const canvas = document.getElementById("canvas").cloneNode(true);
+
+  cleanBuilder(canvas); // 🔥 MUST
+
+  return formatHTML(canvas.innerHTML);
+}
